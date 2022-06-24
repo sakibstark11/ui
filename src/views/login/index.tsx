@@ -4,9 +4,12 @@ import LoginForm from '../../components/login';
 import axios from "../../helpers/axios";
 
 const handleLogin = async (email: string, password: string) => {
-    console.log("email", email, "password", password);
-    const { data, status } = await axios.post('/login', { email, password });
-    console.log(data, status);
+    try {
+        const { data: { accessToken } } = await axios.post('/login', { email, password });
+    }
+    catch (error: any) {
+        console.log(error.response.data);
+    }
 };
 
 export default function index() {

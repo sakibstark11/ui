@@ -1,15 +1,17 @@
 import { Box } from '@mui/system';
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import LoginForm from '../../components/login';
 import { axiosPublic } from "../../helpers/axios";
-
-
+import { Context } from '../../userContext';
 
 export default function index() {
+    const userContext = useContext(Context);
+
     const [error, setError] = useState<boolean>(false);
     const [errorMessage, setErrorMessage] = useState<string>('');
     const [loading, setLoading] = useState<boolean>(false);
     const handleLogin = async (email: string, password: string) => {
+
         try {
             setLoading(true);
             setError(false);
@@ -23,11 +25,17 @@ export default function index() {
             setLoading(false);
         }
     };
+
     return (
         <Box sx={{
             display: 'flex',
-            height: '100vh'
+            height: '100vh',
         }}>
-            <LoginForm submitAction={handleLogin} error={error} errorMessage={errorMessage} loading={loading} />
-        </Box>);
+            <LoginForm
+                submitAction={handleLogin}
+                error={error}
+                errorMessage={errorMessage}
+                loading={loading} />
+        </Box>
+    );
 }

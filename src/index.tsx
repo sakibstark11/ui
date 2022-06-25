@@ -10,6 +10,7 @@ import { ThemeProvider } from '@emotion/react';
 import theme from '../src/themes/default';
 import { Container } from '@mui/system';
 import LoginView from "./views/login";
+import UserContext from './userContext';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -21,11 +22,16 @@ root.render(
       <Container>
         <Router>
           <Routes>
-            <Route path="/login" element={<LoginView />}>
-            </Route>
+            <Route path="/login"
+              element={
+                <UserContext>
+                  <LoginView />
+                </UserContext>
+              }
+            />
           </Routes>
         </Router>
       </Container>
-    </ThemeProvider>
+    </ThemeProvider >
   </React.StrictMode >
 );

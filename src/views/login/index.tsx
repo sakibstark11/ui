@@ -1,7 +1,7 @@
 import { Box } from '@mui/system';
 import React, { useState } from 'react';
 import LoginForm from '../../components/login';
-import axios from "../../helpers/axios";
+import { axiosPublic } from "../../helpers/axios";
 
 
 
@@ -14,7 +14,7 @@ export default function index() {
             setLoading(true);
             setError(false);
             setErrorMessage('');
-            const { data: { accessToken } } = await axios.post('/login', { email, password });
+            const { data: { accessToken } } = await axiosPublic.post('/login', { email, password });
             setLoading(false);
         }
         catch (error: any) {

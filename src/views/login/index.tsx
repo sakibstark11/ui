@@ -4,7 +4,7 @@ import LoginForm from '../../components/login';
 import { axiosPublic } from "../../helpers/axios";
 import { Context } from '../../userContext';
 
-export default function index() {
+export default function Index() {
     const userContext = useContext(Context);
 
     const [error, setError] = useState<boolean>(false);
@@ -21,7 +21,7 @@ export default function index() {
         }
         catch (error: any) {
             setError(true);
-            setErrorMessage(error.response.data.message || 'something went wrong');
+            setErrorMessage(error.response.data.message ?? 'something went wrong');
             setLoading(false);
         }
     };

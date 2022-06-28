@@ -5,7 +5,7 @@ const abc = "ss";
 
 
 
-export default function index(props: any) {
+export default function Index(props: any) {
     return (
         <Context.Provider value={abc}>
             {props.children}

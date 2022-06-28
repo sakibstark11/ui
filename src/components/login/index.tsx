@@ -9,7 +9,7 @@ interface LoginActionProp {
     loading: boolean;
 }
 
-export default function index({ submitAction, error, errorMessage, loading }: LoginActionProp) {
+export default function Index({ submitAction, error, errorMessage, loading }: LoginActionProp) {
     const emailRef = useRef<HTMLInputElement>(null);
     const passwordRef = useRef<HTMLInputElement>(null);
     return <Grid

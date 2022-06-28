@@ -4,12 +4,11 @@ import React, { useRef } from 'react';
 
 interface LoginActionProp {
     submitAction: Function;
-    error: boolean;
     errorMessage: string;
     loading: boolean;
 }
 
-export default function Index({ submitAction, error, errorMessage, loading }: LoginActionProp) {
+export default function Index({ submitAction, errorMessage, loading }: LoginActionProp) {
     const emailRef = useRef<HTMLInputElement>(null);
     const passwordRef = useRef<HTMLInputElement>(null);
     return <Grid
@@ -23,7 +22,7 @@ export default function Index({ submitAction, error, errorMessage, loading }: Lo
                 inputRef={emailRef}
                 label="Email"
                 variant="outlined"
-                error={error}
+                error={!!errorMessage}
             />
         </Grid>
         <Grid item>
@@ -31,10 +30,11 @@ export default function Index({ submitAction, error, errorMessage, loading }: Lo
                 inputRef={passwordRef}
                 label="Password"
                 variant="outlined"
-                error={error} />
+                error={!!errorMessage}
+            />
         </Grid>
         {
-            error && <Grid item>
+            !!errorMessage && <Grid item>
                 <Alert
                     severity="error">
                     {errorMessage}
@@ -46,10 +46,8 @@ export default function Index({ submitAction, error, errorMessage, loading }: Lo
                 loading={loading}
                 variant="outlined"
                 onClick={() => {
-                    emailRef.current
-                        && emailRef.current.value
-                        && passwordRef.current
-                        && passwordRef.current.value
+                    emailRef.current?.value
+                        && passwordRef.current?.value
                         && submitAction(emailRef.current.value, passwordRef.current.value);
                 }}>
                 Login

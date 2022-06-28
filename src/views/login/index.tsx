@@ -1,28 +1,26 @@
 import { Box } from '@mui/system';
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import LoginForm from '../../components/login';
 import { axiosPublic } from "../../helpers/axios";
-import { Context } from '../../userContext';
+import useAuth from "../../authContext/useAuth";
 
 export default function Index() {
-    const userContext = useContext(Context);
-
-    const [error, setError] = useState<boolean>(false);
     const [errorMessage, setErrorMessage] = useState<string>('');
     const [loading, setLoading] = useState<boolean>(false);
+    const { setUser } = useAuth();
     const handleLogin = async (email: string, password: string) => {
 
         try {
             setLoading(true);
-            setError(false);
             setErrorMessage('');
             const { data: { accessToken } } = await axiosPublic.post('/login', { email, password });
+            setUser({ email, accessToken });
             setLoading(false);
         }
         catch (error: any) {
-            setError(true);
-            setErrorMessage(error.response.data.message ?? 'something went wrong');
             setLoading(false);
+            setErrorMessage(error.response.data.message ?? 'something went wrong');
+            setUser({ email: null, accessToken: null });
         }
     };
 
@@ -33,7 +31,6 @@ export default function Index() {
         }}>
             <LoginForm
                 submitAction={handleLogin}
-                error={error}
                 errorMessage={errorMessage}
                 loading={loading} />
         </Box>

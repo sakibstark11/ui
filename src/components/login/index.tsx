@@ -14,9 +14,7 @@ export default function Index({ submitAction, errorMessage, loading }: LoginActi
     return <Grid
         container
         rowSpacing={2}
-        direction="column"
-        justifyContent="center"
-        alignItems="center">
+        direction="column">
         <Grid item>
             <TextField
                 inputRef={emailRef}

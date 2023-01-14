@@ -12,8 +12,11 @@ export default function Index() {
     const { setUser } = useAuth();
     const navigate = useNavigate();
     const location = useLocation() as LocationProps;
-    const sourceLocation = location?.state?.from?.pathname ?? '/';
+    const sourceLocation = location?.state?.from?.pathname ?? '/user';
 
+    const storeTokenInBrowser = ({ key, value }: { key: string, value: string; }) => {
+        sessionStorage.setItem(key, value);
+    };
     const handleLogin = async (email: string, password: string) => {
         try {
             setLoading(true);

@@ -11,6 +11,13 @@ interface LoginActionProp {
 export default function Index({ submitAction, errorMessage, loading }: LoginActionProp) {
     const emailRef = useRef<HTMLInputElement>(null);
     const passwordRef = useRef<HTMLInputElement>(null);
+
+    const handleSubmit = () => {
+        emailRef.current?.value
+            && passwordRef.current?.value
+            && submitAction(emailRef.current.value, passwordRef.current.value);
+    };
+
     return <Grid
         container
         rowSpacing={2}
@@ -43,11 +50,7 @@ export default function Index({ submitAction, errorMessage, loading }: LoginActi
             <LoadingButton
                 loading={loading}
                 variant="outlined"
-                onClick={() => {
-                    emailRef.current?.value
-                        && passwordRef.current?.value
-                        && submitAction(emailRef.current.value, passwordRef.current.value);
-                }}>
+                onClick={handleSubmit}>
                 Login
             </LoadingButton>
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useLocation, Navigate, Outlet } from 'react-router-dom';
-import useAuth from '../../authContext/useAuth';
+import useAuth from '../../../authContext/useAuth';
 
 export default function Index() {
     const { user } = useAuth();

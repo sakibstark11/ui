@@ -12,7 +12,8 @@ import { Container } from '@mui/system';
 import LoginView from "./views/login";
 import UserView from "./views/user";
 import UserContext from './authContext';
-import ProtectedRoutes from "./components/protectedRoutes";
+import ProtectedRoutes from "./components/protectedRoutes/user";
+import NavBar from "./components/navBar";
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -21,12 +22,12 @@ root.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Container>
+      <Container maxWidth={false} disableGutters>
         <UserContext>
           <Router>
+            <NavBar />
             <Routes>
               <Route path="/login" element={<LoginView />} />
-
               <Route element={<ProtectedRoutes />}>
                 <Route path="/user" element={<UserView />} />
               </Route>

@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import LoginForm from '../../components/login';
-import { axiosPublic } from "../../helpers/axios";
-import useAuth from "../../authContext/useAuth";
-import { useNavigate, useLocation } from "react-router-dom";
+import { axiosPublic } from '../../helpers/axios';
+import useAuth from '../../authContext/useAuth';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { LocationProps } from './types';
-import ViewWrapper from "../../components/viewWrapper";
+import ViewWrapper from '../../components/viewWrapper';
 
 export default function Index() {
     const [errorMessage, setErrorMessage] = useState<string>('');
@@ -14,31 +14,37 @@ export default function Index() {
     const location = useLocation() as LocationProps;
     const sourceLocation = location?.state?.from?.pathname ?? '/user';
 
-    const storeTokenInBrowser = ({ key, value }: { key: string, value: string; }) => {
+    const storeInBrowser = ({ key, value }: { key: string; value: string }) => {
         sessionStorage.setItem(key, value);
     };
+
     const handleLogin = async (email: string, password: string) => {
         try {
             setLoading(true);
             setErrorMessage('');
-            const { data: { accessToken } } = await axiosPublic.post('/login', { email, password });
+            const {
+                data: { accessToken },
+            } = await axiosPublic.post('/login', { email, password });
             setUser({ email, accessToken });
+            storeInBrowser('accessToken', accessToken);
             setLoading(false);
             navigate(sourceLocation, { replace: true });
-        }
-        catch (error: any) {
+        } catch (error: any) {
             setLoading(false);
-            setErrorMessage(error.response.data.message ?? 'something went wrong');
+            setErrorMessage(
+                error.response.data.message ?? 'something went wrong',
+            );
             setUser({ email: null, accessToken: null });
         }
     };
 
     return (
-        <ViewWrapper name='Login'>
+        <ViewWrapper name="Login">
             <LoginForm
                 submitAction={handleLogin}
                 errorMessage={errorMessage}
-                loading={loading} />
+                loading={loading}
+            />
         </ViewWrapper>
     );
 }
